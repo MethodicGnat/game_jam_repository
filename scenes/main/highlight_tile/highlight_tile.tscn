@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://sf727m8yoyhu"]
+
+[ext_resource type="Script" uid="uid://beslcdw0a43n8" path="res://scenes/main/highlight_tile/highlight_tile.gd" id="1_fowp3"]
+
+[node name="HighlightTile" type="Node2D"]
+z_index = 1
+script = ExtResource("1_fowp3")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="BackBufferCopy"]
+offset_right = 64.0
+offset_bottom = 64.0
+mouse_filter = 2
+color = Color(0.59607846, 0.2509804, 0.25882354, 0.2)
