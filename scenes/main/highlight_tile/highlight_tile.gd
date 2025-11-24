@@ -10,4 +10,3 @@ func followMousePos() -> void:
 	
 func _process(_delta: float) -> void:
 	followMousePos()
-	
