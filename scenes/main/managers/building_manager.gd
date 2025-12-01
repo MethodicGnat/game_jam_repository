@@ -22,7 +22,7 @@ func place_tower(cell_pos: Vector2i, tower_packed_scene: PackedScene) -> void:
 
 func remove_tower(cell_pos: Vector2i) -> void:
 	for i in get_tree().get_nodes_in_group(TOWER_GROUP):
-		if Vector2i(i.position) == cell_pos * 64:
+		if Vector2i(i.position)/64 == cell_pos:
 			i.queue_free()
 			used_tiles.erase(Vector2i(i.position)/64)
 
