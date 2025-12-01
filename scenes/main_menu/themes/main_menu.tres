@@ -1,0 +1,30 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c3p4kawb38koq"]
+
+[sub_resource type="SystemFont" id="SystemFont_8bchx"]
+font_names = PackedStringArray("Pixel Operator 8")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wi5jj"]
+bg_color = Color(0.30980393, 0.078431375, 0.5568628, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.30980393, 0.078431375, 0.5568628, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1b6gl"]
+bg_color = Color(0.31155512, 0.0796053, 0.5564252, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_wi5jj"]
+font_names = PackedStringArray("Pixel Operator 8")
+
+[resource]
+Button/fonts/font = SubResource("SystemFont_8bchx")
+Button/styles/normal = SubResource("StyleBoxFlat_wi5jj")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_1b6gl")
+Label/colors/font_color = Color(0.15686275, 0.34509805, 1, 1)
+Label/font_sizes/font_size = 32
+Label/fonts/font = SubResource("SystemFont_wi5jj")

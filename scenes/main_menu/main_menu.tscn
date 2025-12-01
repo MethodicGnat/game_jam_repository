@@ -1,0 +1,166 @@
+[gd_scene load_steps=3 format=3 uid="uid://4jsxh4da8igc"]
+
+[ext_resource type="Theme" uid="uid://c3p4kawb38koq" path="res://scenes/main_menu/themes/main_menu.tres" id="1_fsom3"]
+[ext_resource type="Script" uid="uid://crjpo5lhq3hue" path="res://scenes/main_menu/menu.gd" id="2_0ebjn"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fsom3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.6704717, 0.9999998, 0.9970841, 1)
+
+[node name="MenuContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_fsom3")
+theme_override_constants/separation = 7
+alignment = 1
+script = ExtResource("2_0ebjn")
+
+[node name="Play" type="Button" parent="MenuContainer"]
+layout_mode = 2
+text = "PLAY"
+
+[node name="Credits" type="Button" parent="MenuContainer"]
+layout_mode = 2
+text = "CREDITS"
+
+[node name="Volume" type="HSlider" parent="MenuContainer"]
+layout_mode = 2
+theme = ExtResource("1_fsom3")
+rounded = true
+
+[node name="Quit" type="Button" parent="MenuContainer"]
+layout_mode = 2
+text = "QUIT"
+
+[node name="Title" type="Label" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -450.0
+offset_bottom = 24.0
+grow_horizontal = 0
+theme = ExtResource("1_fsom3")
+text = "Baddie Tower Defense"
+horizontal_alignment = 2
+autowrap_mode = 2
+uppercase = true
+
+[node name="CreditsMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CreditsMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Credits"
+uppercase = true
+
+[node name="GridContainer" type="GridContainer" parent="CreditsMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 30
+columns = 2
+
+[node name="Label" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "Programmer"
+
+[node name="Label2" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "MethodicGnat"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "TextureAtlas"
+
+[node name="Label4" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "KennyAssets"
+horizontal_alignment = 2
+
+[node name="Label5" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "Graphic Designer"
+
+[node name="Label6" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "MethodicGnat"
+horizontal_alignment = 2
+
+[node name="Label7" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "Music & SFX"
+
+[node name="Label8" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "MethodicGnat"
+horizontal_alignment = 2
+
+[node name="Label9" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "Font"
+
+[node name="Label10" type="Label" parent="CreditsMenu/GridContainer"]
+layout_mode = 2
+text = "Pixel-Operator"
+horizontal_alignment = 2
+
+[node name="Return" type="Button" parent="CreditsMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -10.0
+offset_right = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "RETURN"
+
+[connection signal="button_up" from="MenuContainer/Play" to="MenuContainer" method="_on_play_button_up"]
+[connection signal="button_up" from="MenuContainer/Credits" to="MenuContainer" method="_on_credits_button_up"]
+[connection signal="changed" from="MenuContainer/Volume" to="MenuContainer" method="_on_volume_changed"]
+[connection signal="value_changed" from="MenuContainer/Volume" to="MenuContainer" method="_on_volume_value_changed"]
+[connection signal="button_up" from="MenuContainer/Quit" to="MenuContainer" method="_on_quit_button_up"]
+[connection signal="button_up" from="CreditsMenu/Return" to="MenuContainer" method="_on_credits_button_up"]

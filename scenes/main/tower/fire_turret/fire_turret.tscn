@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ban1lqckfmkoc"]
+
+[node name="GunT1" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Placeholder" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(0.7882353, 0.8901961, 0.8745098, 1)
+
+[node name="Marker2D" type="Marker2D" parent="Placeholder"]
+position = Vector2(43, 20.3)
