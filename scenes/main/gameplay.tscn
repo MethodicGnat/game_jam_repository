@@ -1,8 +1,8 @@
-[gd_scene load_steps=19 format=4 uid="uid://b5ccqtf8r2ifj"]
+[gd_scene load_steps=21 format=4 uid="uid://b5ccqtf8r2ifj"]
 
 [ext_resource type="Script" uid="uid://rjs046dho8yl" path="res://scenes/main/gameplay.gd" id="1_0rn45"]
 [ext_resource type="Texture2D" uid="uid://bbgd0udt6w7k4" path="res://assets/tileset/Tilesheet/towerDefense_tilesheet.png" id="1_l5ug7"]
-[ext_resource type="PackedScene" uid="uid://c7icmb03fpksn" path="res://scenes/main/tower/gun_turret/gun_turret.tscn" id="2_h32jb"]
+[ext_resource type="PackedScene" uid="uid://ban1lqckfmkoc" path="res://scenes/main/tower/fire_turret/fire_turret.tscn" id="2_f34m3"]
 [ext_resource type="PackedScene" uid="uid://sf727m8yoyhu" path="res://scenes/main/highlight_tile/highlight_tile.tscn" id="2_l5ug7"]
 [ext_resource type="PackedScene" uid="uid://bi5l3vkts46n8" path="res://scenes/main/managers/building_manager.tscn" id="3_pn8wo"]
 [ext_resource type="PackedScene" uid="uid://n2a2rgfic5lw" path="res://scenes/main/managers/pathfinding_manager.tscn" id="4_h32jb"]
@@ -68,6 +68,33 @@ sources/1 = SubResource("TileSetAtlasSource_aseis")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h32jb"]
 
+[sub_resource type="Animation" id="Animation_gyiw3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/GameOver:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/RoundLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-344, 300)]
+}
+
 [sub_resource type="Animation" id="Animation_7s3o2"]
 resource_name = "game_over"
 tracks/0/type = "value"
@@ -83,31 +110,48 @@ tracks/0/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_gyiw3"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_f34m3"]
+resource_name = "new round"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/GameOver:visible")
+tracks/0/path = NodePath("CanvasLayer/RoundLabel:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"times": PackedFloat32Array(0, 0.4, 0.6333333, 1),
+"transitions": PackedFloat32Array(2, 1, 1, 0.5),
+"update": 0,
+"values": [Vector2(-344, 300), Vector2(420, 300), Vector2(480, 300), Vector2(1162, 300)]
+}
+
+[sub_resource type="Animation" id="Animation_utac4"]
+resource_name = "build round"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/BuildRoundLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.39999998, 0.6333333, 1),
+"transitions": PackedFloat32Array(2, 1, 1, 0.5),
+"update": 0,
+"values": [Vector2(-344, 300), Vector2(420, 300), Vector2(480, 300), Vector2(1162, 300)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gyiw3"]
 _data = {
 &"RESET": SubResource("Animation_gyiw3"),
-&"game_over": SubResource("Animation_7s3o2")
+&"build round": SubResource("Animation_utac4"),
+&"game_over": SubResource("Animation_7s3o2"),
+&"new round": SubResource("Animation_f34m3")
 }
 
 [node name="Gameplay" type="Node2D" node_paths=PackedStringArray("building_manager", "enemy_spawner")]
 process_mode = 3
 script = ExtResource("1_0rn45")
-tower_packed_scene = ExtResource("2_h32jb")
+tower_packed_scene = ExtResource("2_f34m3")
 building_manager = NodePath("BuildingManager")
 enemy_spawner = NodePath("EnemySpawner")
 
@@ -141,7 +185,7 @@ unique_name_in_owner = true
 process_mode = 1
 position = Vector2(1219, 413)
 
-[node name="RoundTimer" type="Timer" parent="."]
+[node name="BuildRoundTimer" type="Timer" parent="."]
 process_mode = 1
 
 [node name="StartPos" type="Marker2D" parent="."]
@@ -309,5 +353,37 @@ texture = ExtResource("10_7s3o2")
 expand_mode = 3
 stretch_mode = 5
 
-[connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
+[node name="RoundLabel" type="HBoxContainer" parent="CanvasLayer" groups=["IMPORTANT_LABELS"]]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_top = -24.0
+offset_right = -99.0
+offset_bottom = 24.0
+grow_vertical = 2
+theme = ExtResource("9_8dr6n")
+
+[node name="Label" type="Label" parent="CanvasLayer/RoundLabel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "round"
+uppercase = true
+
+[node name="Round" type="Label" parent="CanvasLayer/RoundLabel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+
+[node name="BuildRoundLabel" type="Label" parent="CanvasLayer"]
+offset_left = -344.0
+offset_top = 300.0
+offset_right = -80.0
+offset_bottom = 348.0
+theme = ExtResource("9_8dr6n")
+theme_override_font_sizes/font_size = 48
+text = "Build!"
+uppercase = true
+
+[connection signal="timeout" from="BuildRoundTimer" to="." method="_on_build_round_timer_timeout"]
 [connection signal="button_up" from="CanvasLayer/GameOver/VBoxContainer/GridContainer/Restart" to="CanvasLayer/GameOver" method="_on_restart_button_up"]
+[connection signal="button_up" from="CanvasLayer/GameOver/VBoxContainer/GridContainer/Return" to="CanvasLayer/GameOver" method="_on_return_button_up"]

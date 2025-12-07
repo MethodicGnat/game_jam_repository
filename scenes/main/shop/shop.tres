@@ -1,0 +1,41 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://bn2qfffl1pyeh"]
+
+[sub_resource type="SystemFont" id="SystemFont_rmdq5"]
+font_names = PackedStringArray("Pixel Operator 8")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rmdq5"]
+bg_color = Color(0.00566115, 0.0056611523, 0.005661145, 0.4862745)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0k2c1"]
+bg_color = Color(0.1120859, 8.798903e-08, 1.9553118e-08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6oked"]
+bg_color = Color(0.05490196, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="SystemFont" id="SystemFont_ouhpk"]
+font_names = PackedStringArray("Pixel Operator 8")
+
+[resource]
+Button/font_sizes/font_size = 32
+Button/fonts/font = SubResource("SystemFont_rmdq5")
+Button/styles/focus = SubResource("StyleBoxFlat_rmdq5")
+Button/styles/normal = SubResource("StyleBoxFlat_0k2c1")
+Button/styles/pressed = SubResource("StyleBoxFlat_6oked")
+Label/font_sizes/font_size = 48
+Label/fonts/font = SubResource("SystemFont_ouhpk")

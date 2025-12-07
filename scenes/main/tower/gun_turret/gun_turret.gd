@@ -1,5 +1,6 @@
 extends Turret
 
+
 var bullet_packed_scene: PackedScene = preload("res://scenes/main/weapon/homing_missle/homing_missle.tscn")
 var killable_enemies: Array[Enemy]:
 	set(new_killable_enemies):
@@ -34,19 +35,19 @@ func _on_body_exited(body: Node2D) -> void:
 		target = null
 		is_firing = false
 	if killable_enemies.size() > 0:
-		killable_enemies.remove_at(0)
+		killable_enemies.erase(body as Enemy)
 
-func _on_target_lost() -> void:
-	rotation = 0
 
 func _on_shoot_timer_timeout() -> void:
 	if target != null:
 		call_deferred("shoot")
-		shoot_timer.start() # Replace with function body.
+		shoot_timer.start()
+
 
 func _on_is_firing() -> void:
 	call_deferred("shoot")
 	shoot_timer.start()
+
 
 func shoot():
 	var bullet := bullet_packed_scene.instantiate()

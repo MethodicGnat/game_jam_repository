@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=3 uid="uid://bunuob21smu7x"]
+
+[ext_resource type="Script" uid="uid://do1rx0twkqkk1" path="res://scenes/main/weapon/fire_attack/fire_attack.gd" id="1_xo0q2"]
+
+[sub_resource type="Curve" id="Curve_wjm7l"]
+_data = [Vector2(0.008230448, 0), 0.0, 0.0, 0, 0, Vector2(0.9917696, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_cgatr"]
+colors = PackedColorArray(1, 0.8352941, 0.09019608, 1, 1, 0.23529412, 0.25490198, 1)
+
+[sub_resource type="Gradient" id="Gradient_cuovo"]
+colors = PackedColorArray(1, 0.8352941, 0.09019608, 1, 0.7233423, 0, 0.10807199, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xo0q2"]
+radius = 3.1622777
+
+[sub_resource type="Animation" id="Animation_wjm7l"]
+resource_name = "explode"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D/CollisionShape2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(78, 78)]
+}
+
+[sub_resource type="Animation" id="Animation_cgatr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D/CollisionShape2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cuovo"]
+_data = {
+&"RESET": SubResource("Animation_cgatr"),
+&"explode": SubResource("Animation_wjm7l")
+}
+
+[node name="FireAttack" type="Node2D"]
+script = ExtResource("1_xo0q2")
+
+[node name="Explosion" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 48
+lifetime = 1.5
+one_shot = true
+speed_scale = 3.0
+explosiveness = 0.64
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 15.0
+gravity = Vector2(0, 0)
+angular_velocity_min = -490.81
+angular_velocity_max = 454.68
+linear_accel_min = 100.0
+linear_accel_max = 100.0
+radial_accel_min = -6.06
+radial_accel_max = 100.0
+scale_amount_min = 0.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_wjm7l")
+color = Color(1, 0.23529412, 0.25490198, 1)
+color_ramp = SubResource("Gradient_cgatr")
+color_initial_ramp = SubResource("Gradient_cuovo")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(1e-05, 1e-05)
+shape = SubResource("CircleShape2D_xo0q2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_cuovo")
+}
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

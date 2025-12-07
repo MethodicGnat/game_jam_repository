@@ -4,6 +4,7 @@ extends Node2D
 signal target_acquired
 signal target_lost
 
+var texture: Texture2D
 var target: Enemy:
 	set(new_target):
 		target = new_target
@@ -23,7 +24,7 @@ func _ready() -> void:
 	target_lost.connect(_on_target_lost)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	look_at(target.position)
 
 
@@ -36,7 +37,7 @@ func _on_target_acquired() -> void:
 
 
 func _on_target_lost() -> void:
-	pass
+	rotation = 0
 
 
 func _on_is_firing() -> void:

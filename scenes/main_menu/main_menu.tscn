@@ -36,10 +36,12 @@ alignment = 1
 script = ExtResource("2_0ebjn")
 
 [node name="Play" type="Button" parent="MenuContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "PLAY"
 
 [node name="Credits" type="Button" parent="MenuContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "CREDITS"
 
@@ -49,6 +51,7 @@ theme = ExtResource("1_fsom3")
 rounded = true
 
 [node name="Quit" type="Button" parent="MenuContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "QUIT"
 

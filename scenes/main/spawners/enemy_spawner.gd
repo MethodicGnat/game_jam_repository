@@ -16,16 +16,18 @@ var enemy_array: Array[Type]
 var enemy_count: int = 0
 var current_data_index: int = 0
 
-const DEFAULT_SPAWN_DELAY: float = 1
+const DEFAULT_SPAWN_DELAY: float = 0.45
 const ENEMY_GROUP: String = "ENEMY_GROUP"
 
 func _ready() -> void:
+	enemy_array.clear()
+	timer.wait_time = DEFAULT_SPAWN_DELAY
 	wave_complete.connect(main._enter_build_round)
 	new_score.connect(main._on_new_score)
 
 
 func initialize_enemies(a: Array[int]) -> void:
-	self.enemy_array = a as Array[Type]
+	enemy_array = a as Array[Type]
 
 
 func spawn_enemy() -> void:
@@ -34,7 +36,6 @@ func spawn_enemy() -> void:
 		
 		var enemy := enemy_packed_scene.instantiate()
 		enemy.name = "Enemy"
-		enemy._path_array.duplicate()
 		enemy.position = start_pos.position
 		
 		get_parent().add_child(enemy)
@@ -46,6 +47,7 @@ func _count_deaths(is_dead_to_turret: bool) -> void:
 	if is_dead_to_turret:
 		enemy_count += 1
 		if enemy_count >= enemy_array.size():
+			timer.stop()
 			wave_complete.emit()
 			new_score.emit(enemy_count)
 			current_data_index = 0
@@ -58,4 +60,3 @@ func _count_deaths(is_dead_to_turret: bool) -> void:
 func _on_enemy_timer_timeout() -> void:
 	current_data_index += 1
 	spawn_enemy()
-	 # Replace with function body.

@@ -10,6 +10,7 @@ size = Vector2(20, 6.2202253)
 
 [node name="HomingMissile" type="CharacterBody2D"]
 process_mode = 1
+z_index = 2
 script = ExtResource("1_qoy2u")
 
 [node name="ColorRect" type="ColorRect" parent="."]

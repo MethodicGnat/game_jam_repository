@@ -1,4 +1,27 @@
-[gd_scene format=3 uid="uid://bjh5iewa8h0n2"]
+[gd_scene load_steps=8 format=3 uid="uid://bjh5iewa8h0n2"]
+
+[ext_resource type="Theme" uid="uid://bn2qfffl1pyeh" path="res://scenes/main/shop/shop.tres" id="1_0k2c1"]
+[ext_resource type="Script" uid="uid://c2wn48lfv0wxs" path="res://scenes/main/shop/shop.gd" id="2_6oked"]
+
+[sub_resource type="Animation" id="Animation_psqh4"]
+resource_name = "exit"
+
+[sub_resource type="Animation" id="Animation_1ycg0"]
+resource_name = "enter"
+
+[sub_resource type="Animation" id="Animation_mov5m"]
+resource_name = "purchase"
+
+[sub_resource type="Animation" id="Animation_3ymts"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_76ubo"]
+_data = {
+&"enter": SubResource("Animation_1ycg0"),
+&"exit": SubResource("Animation_psqh4"),
+&"idle": SubResource("Animation_3ymts"),
+&"purchase": SubResource("Animation_mov5m")
+}
 
 [node name="Shop" type="Control"]
 process_mode = 1
@@ -8,3 +31,99 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_0k2c1")
+script = ExtResource("2_6oked")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41586584, 0.2069261, 0.14768592, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 310)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Basic" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(577, 59)
+layout_mode = 2
+theme = ExtResource("1_0k2c1")
+text = "Mercernary"
+
+[node name="Water" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(577, 59)
+layout_mode = 2
+theme = ExtResource("1_0k2c1")
+text = "Water type"
+
+[node name="Fire" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(577, 59)
+layout_mode = 2
+theme = ExtResource("1_0k2c1")
+text = "Fire type"
+
+[node name="Earth" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(577, 59)
+layout_mode = 2
+theme = ExtResource("1_0k2c1")
+text = "Earth Guardian"
+
+[node name="Exit" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(577, 59)
+layout_mode = 2
+theme = ExtResource("1_0k2c1")
+text = "EXIT"
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(575, 0)
+layout_mode = 2
+color = Color(0.052481934, 0.009589028, 0.017681811, 1)
+
+[node name="Baddie" type="TextureRect" parent="HBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Purchase" type="Button" parent="HBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -4.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "PURCHASE"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "shop"
+uppercase = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_76ubo")
+}

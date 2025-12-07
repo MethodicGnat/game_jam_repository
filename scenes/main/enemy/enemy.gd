@@ -4,6 +4,7 @@ extends CharacterBody2D
 signal died(is_dead_to_turret)
 
 enum Type {BASIC, EARTH, WIND, FIRE}
+
 @export var enemy_type: Type = Type.BASIC
 @export var movement_speed: float = 500
 @export var health: int = 100:
@@ -15,6 +16,7 @@ enum Type {BASIC, EARTH, WIND, FIRE}
 
 const MANAGER_GROUP: String = "MANAGER"
 
+@onready var sprite: ColorRect = $Sprite2D
 @onready var enemy_spawner: EnemySpawner = get_parent().find_child("EnemySpawner")
 @onready var target_pos: Marker2D = get_parent().find_child("EndPos")
 @onready var pathfinding_manager: PathfindingManager = get_tree().get_nodes_in_group(MANAGER_GROUP)[1]
@@ -33,13 +35,23 @@ func _ready() -> void:
 	
 	match(enemy_type):
 		Type.EARTH:
+			scale = Vector2(3, 3)
+			sprite.color = Color(0.533, 0.267, 0.0, 1.0)
 			movement_speed = 100
+			health = 333
+			z_index = 2
 		Type.WIND:
-			movement_speed = 500
+			sprite.color = Color(0.871, 1.0, 1.0, 1.0)
+			scale = Vector2(0.75, 0.75)
+			movement_speed = 750
+			health = 50
 		Type.FIRE:
+			sprite.color = Color(1.0, 0.392, 0.251, 1.0)
 			movement_speed = 300
+			health = 150
 		_:
 			movement_speed = 200
+
 
 func _physics_process(_delta: float) -> void:
 	if !Main.build_round:
@@ -52,6 +64,7 @@ func take_damage(damage: int):
 	animation_player.play("damage_taken")
 	health -= damage
 
+
 func get_path_to_position() -> void:
 	if len(_path_array) > 0:
 		var direction: Vector2 = global_position.direction_to(self._path_array[0])
@@ -63,7 +76,6 @@ func get_path_to_position() -> void:
 
 
 func _on_end_area_entered(area: Area2D) -> void:
-	var area_class = area.get_parent().get_class()
 	if area.name == "Out":
 		is_dead_to_turret = false
 		health = 0

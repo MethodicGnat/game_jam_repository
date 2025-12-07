@@ -1,6 +1,6 @@
 extends VBoxContainer
 
-var game_scene = preload("res://scenes/main/gameplay.tscn")
+@onready var game_scene: String = "res://scenes/main/gameplay.tscn"
 @onready var credits_menu: Control = $"../CreditsMenu"
 @onready var title: Label = $"../Title"
 @onready var return_bttn: Button = $"../CreditsMenu/Return"
@@ -17,7 +17,7 @@ func toggle_vision() -> void:
 
 
 func _on_play_button_up() -> void:
-	get_tree().change_scene_to_packed(game_scene) # Replace with function body.
+	get_tree().change_scene_to_file(game_scene) # Replace with function body.
 
 
 func _on_credits_button_up() -> void:

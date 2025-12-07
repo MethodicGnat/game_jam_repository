@@ -10,7 +10,7 @@ func _init() -> void:
 	speed = 1250
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if target != null:
 		velocity = global_position.direction_to(target.position) * speed
 		
