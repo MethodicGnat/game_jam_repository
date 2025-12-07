@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://da7g2dvkmblup"]
+
+[ext_resource type="Script" uid="uid://clg45gnggb3g2" path="res://scenes/main/inventory/items/inventory_item.gd" id="1_600ig"]
+[ext_resource type="Texture2D" uid="uid://gvdkqjvww5l" path="res://icon.svg" id="2_rx4jy"]
+
+[resource]
+script = ExtResource("1_600ig")
+name = "gun_turret"
+texture = ExtResource("2_rx4jy")
+count = 1
+metadata/_custom_type_script = "uid://clg45gnggb3g2"

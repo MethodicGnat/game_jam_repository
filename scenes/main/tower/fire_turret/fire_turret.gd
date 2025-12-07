@@ -1,14 +1,14 @@
+class_name FireTurret
 extends Turret
 
 var fire_attack_scene: PackedScene = preload("res://scenes/main/weapon/fire_attack/fire_attack.tscn")
-@onready var shoot_timer: Timer = $ShootTimer
-
 var killable_enemies: Array[Enemy]
 
 func _ready() -> void:
 	super._ready()
 	
 	damage_rate = 4
+	shoot_timer = $ShootTimer
 	shoot_timer.wait_time = damage_rate
 
 
@@ -22,6 +22,7 @@ func _physics_process(delta: float) -> void:
 func shoot() -> void:
 	var fire_attack = fire_attack_scene.instantiate()
 	fire_attack.position = global_position
+	fire_attack.target = target
 	get_tree().get_root().add_child(fire_attack)
 
 

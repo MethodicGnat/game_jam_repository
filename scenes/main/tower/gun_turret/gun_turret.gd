@@ -7,12 +7,12 @@ var killable_enemies: Array[Enemy]:
 		killable_enemies = new_killable_enemies
 		if killable_enemies.size() == 0:
 			is_firing = false
-@onready var shoot_timer: Timer = $ShootTimer
 @onready var marker: Marker2D = $Placeholder/Marker2D
 
 func _ready() -> void:
 	super._ready()
 	damage_rate = 1
+	shoot_timer = $ShootTimer
 	shoot_timer.wait_time = damage_rate
 
 

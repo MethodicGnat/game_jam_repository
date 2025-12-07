@@ -1,14 +1,16 @@
-[gd_scene load_steps=21 format=4 uid="uid://b5ccqtf8r2ifj"]
+[gd_scene load_steps=23 format=4 uid="uid://b5ccqtf8r2ifj"]
 
 [ext_resource type="Script" uid="uid://rjs046dho8yl" path="res://scenes/main/gameplay.gd" id="1_0rn45"]
 [ext_resource type="Texture2D" uid="uid://bbgd0udt6w7k4" path="res://assets/tileset/Tilesheet/towerDefense_tilesheet.png" id="1_l5ug7"]
 [ext_resource type="PackedScene" uid="uid://ban1lqckfmkoc" path="res://scenes/main/tower/fire_turret/fire_turret.tscn" id="2_f34m3"]
 [ext_resource type="PackedScene" uid="uid://sf727m8yoyhu" path="res://scenes/main/highlight_tile/highlight_tile.tscn" id="2_l5ug7"]
+[ext_resource type="Resource" uid="uid://cy4fmf68ihn46" path="res://scenes/main/inventory/inventory.tres" id="3_o2b0n"]
 [ext_resource type="PackedScene" uid="uid://bi5l3vkts46n8" path="res://scenes/main/managers/building_manager.tscn" id="3_pn8wo"]
 [ext_resource type="PackedScene" uid="uid://n2a2rgfic5lw" path="res://scenes/main/managers/pathfinding_manager.tscn" id="4_h32jb"]
 [ext_resource type="PackedScene" uid="uid://brwwnnjehcgde" path="res://scenes/main/spawners/enemy_spawner.tscn" id="7_8dr6n"]
 [ext_resource type="PackedScene" uid="uid://h7gmw1uorroy" path="res://scenes/main/enemy/enemy.tscn" id="8_7s3o2"]
 [ext_resource type="Theme" uid="uid://ujvq8852y1od" path="res://scenes/main/UI/gameplay.tres" id="9_8dr6n"]
+[ext_resource type="PackedScene" uid="uid://cpyei6emwgawo" path="res://scenes/main/inventory/inventory.tscn" id="9_utac4"]
 [ext_resource type="Texture2D" uid="uid://bthlt7voba4qx" path="res://assets/coin/coin.png" id="10_7s3o2"]
 [ext_resource type="Script" uid="uid://rg4cpytrhrb3" path="res://scenes/main/UI/ui.gd" id="10_f34m3"]
 [ext_resource type="PackedScene" uid="uid://bjh5iewa8h0n2" path="res://scenes/main/shop/shop.tscn" id="10_gyiw3"]
@@ -95,6 +97,21 @@ tracks/1/keys = {
 "values": [Vector2(-344, 300)]
 }
 
+[sub_resource type="Animation" id="Animation_utac4"]
+resource_name = "build round"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/BuildRoundLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.39999998, 0.6333333, 1),
+"transitions": PackedFloat32Array(2, 1, 1, 0.5),
+"update": 0,
+"values": [Vector2(-344, 300), Vector2(420, 300), Vector2(480, 300), Vector2(1162, 300)]
+}
+
 [sub_resource type="Animation" id="Animation_7s3o2"]
 resource_name = "game_over"
 tracks/0/type = "value"
@@ -125,21 +142,6 @@ tracks/0/keys = {
 "values": [Vector2(-344, 300), Vector2(420, 300), Vector2(480, 300), Vector2(1162, 300)]
 }
 
-[sub_resource type="Animation" id="Animation_utac4"]
-resource_name = "build round"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/BuildRoundLabel:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.39999998, 0.6333333, 1),
-"transitions": PackedFloat32Array(2, 1, 1, 0.5),
-"update": 0,
-"values": [Vector2(-344, 300), Vector2(420, 300), Vector2(480, 300), Vector2(1162, 300)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gyiw3"]
 _data = {
 &"RESET": SubResource("Animation_gyiw3"),
@@ -154,6 +156,7 @@ script = ExtResource("1_0rn45")
 tower_packed_scene = ExtResource("2_f34m3")
 building_manager = NodePath("BuildingManager")
 enemy_spawner = NodePath("EnemySpawner")
+inventory = ExtResource("3_o2b0n")
 
 [node name="BuildingManager" parent="." node_paths=PackedStringArray("tile_map_layer") groups=["MANAGER"] instance=ExtResource("3_pn8wo")]
 process_mode = 1
@@ -212,6 +215,8 @@ libraries = {
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
+
+[node name="Inventory" parent="CanvasLayer" instance=ExtResource("9_utac4")]
 
 [node name="GameOver" type="Control" parent="CanvasLayer"]
 visible = false

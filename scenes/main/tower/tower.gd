@@ -4,6 +4,9 @@ extends Node2D
 signal target_acquired
 signal target_lost
 
+const TURRET_GROUP: String = "TURRET_GROUP"
+
+@onready var shoot_timer
 var texture: Texture2D
 var target: Enemy:
 	set(new_target):
@@ -12,7 +15,11 @@ var target: Enemy:
 			target_lost.emit()
 		else:
 			target_acquired.emit()
-var damage_rate: float
+var damage_rate: float:
+	set(new_damage_rate):
+		damage_rate = new_damage_rate
+		if shoot_timer != null:
+			shoot_timer.wait_time = damage_rate
 var is_firing: bool = false:
 	set(firing):
 		is_firing = firing
@@ -20,6 +27,7 @@ var is_firing: bool = false:
 			_on_is_firing()
 
 func _ready() -> void:
+	add_to_group("TURRET_GROUP")
 	target_acquired.connect(_on_target_acquired)
 	target_lost.connect(_on_target_lost)
 

@@ -4,9 +4,12 @@ extends Node2D
 @export var tower_packed_scene: PackedScene
 @export var building_manager: BuildingManager
 @export var enemy_spawner: EnemySpawner
+@export var inventory: Inventory
+
 @onready var tile_map_layer: TileMapLayer = get_node("TileMapLayer")
 @onready var build_round_timer: Timer = get_node("BuildRoundTimer")
 @onready var shop: Control = $CanvasLayer/Shop
+@onready var inventory_ui: Control = $CanvasLayer/Inventory
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var round_label: Label = $CanvasLayer/RoundLabel/Round
 @onready var score_label = $CanvasLayer/Victory/VBoxContainer/ScoreLabel/Score
@@ -45,6 +48,8 @@ func _ready() -> void:
 	rounds = 0
 	score = 0
 	currency = 0
+	inventory_ui.visible = false
+	shop.visible = false
 	enemies = STARTING_ENEMIES
 	build_round_timer.wait_time = TIME_PER_ROUND
 	
@@ -75,6 +80,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		if event.is_action_pressed("toggle_shop"):
 			shop.visible = !shop.visible
+			inventory_ui.visible = false
+			
+	if event.is_action_pressed("toggle_inventory") and !shop.visible and !get_tree().paused:
+		inventory_ui.visible = !inventory_ui.visible
 
 
 func _enter_build_round() -> void:
@@ -97,6 +106,7 @@ func _on_build_round_timer_timeout() -> void:
 	build_round_timer.stop()
 	build_round = false
 	rounds += 1
+	shop.visible = false
 	
 	animation_player.play("new round")
 	await animation_player.animation_finished

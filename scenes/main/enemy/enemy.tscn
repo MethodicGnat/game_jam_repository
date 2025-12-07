@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://h7gmw1uorroy"]
+[gd_scene load_steps=8 format=3 uid="uid://h7gmw1uorroy"]
 
 [ext_resource type="Script" uid="uid://cka3bh6xmeejd" path="res://scenes/main/enemy/enemy.gd" id="1_mkbon"]
 
@@ -19,6 +19,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BurnEffect:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_mkbon"]
 resource_name = "damage_taken"
@@ -36,11 +48,30 @@ tracks/0/keys = {
 "values": [0.0, -0.5924183, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_puunw"]
+resource_name = "burn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BurnEffect:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_puunw"]
 _data = {
 &"RESET": SubResource("Animation_7rfs5"),
+&"burn": SubResource("Animation_puunw"),
 &"damage_taken": SubResource("Animation_mkbon")
 }
+
+[sub_resource type="Gradient" id="Gradient_lyx2a"]
+colors = PackedColorArray(0.99999994, 0.61755985, 0.3612901, 1, 0.5647059, 0, 0.21960784, 1)
 
 [node name="Enemy" type="CharacterBody2D"]
 process_mode = 1
@@ -77,5 +108,22 @@ shape = SubResource("RectangleShape2D_7rfs5")
 libraries = {
 &"": SubResource("AnimationLibrary_puunw")
 }
+
+[node name="BurnEffect" type="CPUParticles2D" parent="."]
+position = Vector2(0, 3)
+emitting = false
+amount = 24
+speed_scale = 1.97
+emission_shape = 1
+emission_sphere_radius = 19.0
+direction = Vector2(0, -1)
+spread = 119.48
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+linear_accel_min = -11.96
+linear_accel_max = 27.27
+scale_amount_max = 5.0
+color_initial_ramp = SubResource("Gradient_lyx2a")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_end_area_entered"]

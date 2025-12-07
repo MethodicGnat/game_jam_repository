@@ -1,14 +1,42 @@
-[gd_scene format=3 uid="uid://cpyei6emwgawo"]
+[gd_scene load_steps=3 format=3 uid="uid://cpyei6emwgawo"]
+
+[ext_resource type="Script" uid="uid://dyjj26jjpbuxw" path="res://scenes/main/inventory/inventory_ui.gd" id="1_jjgg2"]
+[ext_resource type="PackedScene" uid="uid://bs1wnb5nmy73x" path="res://scenes/main/inventory/items/slot.tscn" id="2_ro2ni"]
 
 [node name="Inventory" type="Control"]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_jjgg2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -108.0
+offset_right = 102.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Slot" parent="HBoxContainer" instance=ExtResource("2_ro2ni")]
+layout_mode = 2
+
+[node name="Slot2" parent="HBoxContainer" instance=ExtResource("2_ro2ni")]
+layout_mode = 2
+
+[node name="Slot3" parent="HBoxContainer" instance=ExtResource("2_ro2ni")]
+layout_mode = 2
+
+[node name="Slot4" parent="HBoxContainer" instance=ExtResource("2_ro2ni")]
+layout_mode = 2

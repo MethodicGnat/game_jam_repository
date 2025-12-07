@@ -15,15 +15,18 @@ enum Type {BASIC, EARTH, WIND, FIRE}
 			died.emit(is_dead_to_turret)
 
 const MANAGER_GROUP: String = "MANAGER"
+const DEFAULT_FIRE_TICK_SPEED: float = 0.4
 
 @onready var sprite: ColorRect = $Sprite2D
 @onready var enemy_spawner: EnemySpawner = get_parent().find_child("EnemySpawner")
 @onready var target_pos: Marker2D = get_parent().find_child("EndPos")
 @onready var pathfinding_manager: PathfindingManager = get_tree().get_nodes_in_group(MANAGER_GROUP)[1]
 @onready var _path_array: Array[Vector2i] = pathfinding_manager.get_valid_path(global_position / 64, target_pos.position / 64)
+@onready var burn_effect: CPUParticles2D = $BurnEffect
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var is_dead_to_turret: bool = false
+var fire_tick_speed: float = DEFAULT_FIRE_TICK_SPEED
 
 func _ready() -> void:
 	name = "Enemy"
@@ -59,10 +62,24 @@ func _physics_process(_delta: float) -> void:
 		move_and_slide()
 
 
-func take_damage(damage: int):
+func take_damage(damage: int) -> void:
 	is_dead_to_turret = true
 	animation_player.play("damage_taken")
 	health -= damage
+
+
+func burn(burn_level: FireAttack.Type, damage: int) -> void:
+	var ticks: int
+	match burn_level:
+		FireAttack.Type.BASIC:
+			ticks = 10
+		_:
+			ticks = health/damage
+	burn_effect.emitting = true
+	for i in range(ticks):
+		take_damage(damage)
+		await get_tree().create_timer(fire_tick_speed).timeout
+	burn_effect.emitting = false
 
 
 func get_path_to_position() -> void:

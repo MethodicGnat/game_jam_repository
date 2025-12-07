@@ -3,17 +3,17 @@
 [ext_resource type="Theme" uid="uid://bn2qfffl1pyeh" path="res://scenes/main/shop/shop.tres" id="1_0k2c1"]
 [ext_resource type="Script" uid="uid://c2wn48lfv0wxs" path="res://scenes/main/shop/shop.gd" id="2_6oked"]
 
-[sub_resource type="Animation" id="Animation_psqh4"]
-resource_name = "exit"
-
 [sub_resource type="Animation" id="Animation_1ycg0"]
 resource_name = "enter"
 
-[sub_resource type="Animation" id="Animation_mov5m"]
-resource_name = "purchase"
+[sub_resource type="Animation" id="Animation_psqh4"]
+resource_name = "exit"
 
 [sub_resource type="Animation" id="Animation_3ymts"]
 resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_mov5m"]
+resource_name = "purchase"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_76ubo"]
 _data = {
@@ -127,3 +127,5 @@ uppercase = true
 libraries = {
 &"": SubResource("AnimationLibrary_76ubo")
 }
+
+[connection signal="button_up" from="HBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_button_up"]
