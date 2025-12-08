@@ -1,5 +1,10 @@
+class_name GunTurret
 extends Turret
 
+
+enum Type {BASIC, SNIPER, MINIGUN}
+
+@export var gun_turret_type: Type = Type.MINIGUN
 
 var bullet_packed_scene: PackedScene = preload("res://scenes/main/weapon/homing_missle/homing_missle.tscn")
 var killable_enemies: Array[Enemy]:
@@ -11,7 +16,15 @@ var killable_enemies: Array[Enemy]:
 
 func _ready() -> void:
 	super._ready()
-	damage_rate = 1
+	
+	match (gun_turret_type):
+		Type.SNIPER:
+			damage_rate = 3
+		Type.MINIGUN:
+			damage_rate = 0.1
+		_:
+			damage_rate = 1
+	
 	shoot_timer = $ShootTimer
 	shoot_timer.wait_time = damage_rate
 
@@ -33,9 +46,11 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body == target:
 		target = null
-		is_firing = false
+	
 	if killable_enemies.size() > 0:
 		killable_enemies.erase(body as Enemy)
+	else:
+		is_firing = false
 
 
 func _on_shoot_timer_timeout() -> void:
@@ -52,6 +67,7 @@ func _on_is_firing() -> void:
 func shoot():
 	var bullet := bullet_packed_scene.instantiate()
 	bullet.position = marker.global_position
+	bullet.bullet_type = gun_turret_type
 	bullet.target = target
 	get_tree().get_root().add_child(bullet)
 	target = null

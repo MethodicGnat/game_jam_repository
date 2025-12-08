@@ -1,13 +1,28 @@
 class_name HomingMissile
 extends CharacterBody2D
 
+
+var bullet_type: GunTurret.Type
+
 var damage: int
 var speed: float
 var target: Enemy = null
 
-func _init() -> void:
-	damage = 35
-	speed = 1250
+
+func _ready() -> void:
+	match (bullet_type):
+		GunTurret.Type.SNIPER:
+			scale = Vector2(3, 0.5)
+			damage = 9999
+			speed = 2000
+		GunTurret.Type.MINIGUN:
+			scale = Vector2(1, 1)
+			damage = 5
+			speed = 1250
+		_:
+			scale = Vector2(2, 1)
+			damage = 35
+			speed = 1250
 
 
 func _physics_process(_delta: float) -> void:
@@ -24,3 +39,4 @@ func _on_body_entered(body: Node2D) -> void:
 	if "Enemy" in body.name:
 		self.queue_free()
 		body.take_damage(damage)
+		print(damage)
