@@ -47,11 +47,11 @@ func _count_deaths(is_dead_to_turret: bool) -> void:
 	if is_dead_to_turret:
 		enemy_count += 1
 		if enemy_count >= enemy_array.size():
-			timer.stop()
-			wave_complete.emit()
 			new_score.emit(enemy_count)
 			current_data_index = 0
 			enemy_count = 0
+			timer.stop()
+			wave_complete.emit()
 	else:
 		animation_player.play("game_over")
 		get_tree().paused = true
@@ -59,4 +59,5 @@ func _count_deaths(is_dead_to_turret: bool) -> void:
 
 func _on_enemy_timer_timeout() -> void:
 	current_data_index += 1
-	spawn_enemy()
+	if current_data_index < enemy_array.size():
+		spawn_enemy()

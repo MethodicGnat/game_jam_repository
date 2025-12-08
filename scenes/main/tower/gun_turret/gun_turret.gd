@@ -51,7 +51,7 @@ func _on_is_firing() -> void:
 
 func shoot():
 	var bullet := bullet_packed_scene.instantiate()
-	bullet.position = global_position + Vector2(5, 5)
+	bullet.position = marker.global_position
 	bullet.target = target
 	get_tree().get_root().add_child(bullet)
 	target = null

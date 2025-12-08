@@ -10,9 +10,10 @@ enum Type {BASIC, EARTH, WIND, FIRE}
 @export var health: int = 100:
 	set(new_health):
 		health = new_health
-		if health <= 0:
-			self.queue_free()
+		if health <= 0 and !emitted:
+			emitted = true
 			died.emit(is_dead_to_turret)
+			self.queue_free()
 
 const MANAGER_GROUP: String = "MANAGER"
 const DEFAULT_FIRE_TICK_SPEED: float = 0.4
@@ -25,6 +26,7 @@ const DEFAULT_FIRE_TICK_SPEED: float = 0.4
 @onready var burn_effect: CPUParticles2D = $BurnEffect
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+var emitted: bool = false
 var is_dead_to_turret: bool = false
 var fire_tick_speed: float = DEFAULT_FIRE_TICK_SPEED
 
@@ -54,6 +56,7 @@ func _ready() -> void:
 			health = 150
 		_:
 			movement_speed = 200
+			health = 100
 
 
 func _physics_process(_delta: float) -> void:
@@ -68,13 +71,13 @@ func take_damage(damage: int) -> void:
 	health -= damage
 
 
-func burn(burn_level: FireAttack.Type, damage: int) -> void:
+func burn(burn_level: FireTurret.Type, damage: int) -> void:
 	var ticks: int
 	match burn_level:
-		FireAttack.Type.BASIC:
+		FireTurret.Type.BASIC:
 			ticks = 10
 		_:
-			ticks = health/damage
+			ticks = health/damage + 1
 	burn_effect.emitting = true
 	for i in range(ticks):
 		take_damage(damage)

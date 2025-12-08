@@ -90,7 +90,7 @@ func _enter_build_round() -> void:
 	animation_player.play("RESET")
 	enemy_array.clear()
 	build_round = true
-	enemies += (enemies/2) + 1
+	enemies += enemies/2 + 1
 	
 	animation_player.play("build round")
 	await animation_player.animation_finished

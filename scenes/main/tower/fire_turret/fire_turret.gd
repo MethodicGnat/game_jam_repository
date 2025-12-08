@@ -1,13 +1,26 @@
 class_name FireTurret
 extends Turret
 
+
+enum Type {BASIC, FLAMETHROWER, EXPLOSION}
+
+@export var fire_turret_type: Type = Type.BASIC
+@onready var marker: Marker2D = $Placeholder/Marker2D
+
 var fire_attack_scene: PackedScene = preload("res://scenes/main/weapon/fire_attack/fire_attack.tscn")
 var killable_enemies: Array[Enemy]
 
 func _ready() -> void:
 	super._ready()
 	
-	damage_rate = 4
+	match (fire_turret_type):
+		Type.FLAMETHROWER:
+			damage_rate = 0.5
+		Type.EXPLOSION:
+			damage_rate = 4
+		_:
+			damage_rate = 2
+	
 	shoot_timer = $ShootTimer
 	shoot_timer.wait_time = damage_rate
 
@@ -20,8 +33,9 @@ func _physics_process(delta: float) -> void:
 
 
 func shoot() -> void:
-	var fire_attack = fire_attack_scene.instantiate()
-	fire_attack.position = global_position
+	var fire_attack := fire_attack_scene.instantiate()
+	fire_attack.position = marker.global_position
+	fire_attack.fire_attack_type = fire_turret_type
 	fire_attack.target = target
 	get_tree().get_root().add_child(fire_attack)
 

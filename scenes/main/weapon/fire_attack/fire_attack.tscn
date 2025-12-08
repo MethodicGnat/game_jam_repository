@@ -69,6 +69,9 @@ tracks/3/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_cuovo"]
+resource_name = "basic_flame"
+
 [sub_resource type="Animation" id="Animation_wjm7l"]
 resource_name = "explode"
 length = 0.5
@@ -96,9 +99,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(78, 78)]
 }
-
-[sub_resource type="Animation" id="Animation_cuovo"]
-resource_name = "basic_flame"
 
 [sub_resource type="Animation" id="Animation_bprry"]
 resource_name = "flame_thrower"
@@ -174,7 +174,7 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 134.62
 initial_velocity_max = 134.62
 scale_amount_min = 0.0
-scale_amount_max = 8.0
+scale_amount_max = 10.0
 color_ramp = SubResource("Gradient_xo0q2")
 
 [node name="Area2D" type="Area2D" parent="."]

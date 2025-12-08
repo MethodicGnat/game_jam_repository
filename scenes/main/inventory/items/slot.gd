@@ -1,8 +1,15 @@
+class_name Slot
 extends ColorRect
 
 
+const SLOT_GROUP: String = "SLOT_GROUP"
+
 @onready var item_display: TextureRect = $Sprite2D
 @onready var count: Label = $Count
+
+func _ready() -> void:
+	add_to_group(SLOT_GROUP)
+
 
 func update(item: Item):
 	if !item:
