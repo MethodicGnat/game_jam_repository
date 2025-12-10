@@ -8,24 +8,28 @@ extends Node2D
 
 @onready var tile_map_layer: TileMapLayer = get_node("TileMapLayer")
 @onready var build_round_timer: Timer = get_node("BuildRoundTimer")
+@onready var round_timer: Timer = $RoundTimer
 @onready var shop: Control = $CanvasLayer/Shop
 @onready var inventory_ui: Control = $CanvasLayer/Inventory
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var round_label: Label = $CanvasLayer/RoundLabel/Round
+@onready var rounds_beaten_label: Label = $CanvasLayer/Victory/VBoxContainer/RoundsBeaten/Rounds
 @onready var score_label = $CanvasLayer/Victory/VBoxContainer/ScoreLabel/Score
 @onready var currency_label: Label = $CanvasLayer/CurrencyLabel/Currency
 
 const STARTING_ENEMIES: int = 2
 const MAX_ENEMIES_KILLED: int = 300
-const TIME_PER_ROUND: float = 2 # seconds
+const TIME_PER_ROUND: float = 30 # seconds
 const IMPORTANT_LABELS: String = "IMPORTANT_LABELS"
 
 static var build_round: bool
 static var enemy_array: Array[int]
+static var time: float
 var rounds: int:
 	set(new_rounds):
 		rounds = new_rounds
-		round_label.text = str(rounds)
+		round_label.text = str(rounds + 1)
+		rounds_beaten_label.text = str(rounds)
 var score: int:
 	set(new_score):
 		score = new_score
@@ -59,11 +63,11 @@ func _ready() -> void:
 
 
 func start_wave(enemy_count) -> void:
-	
 	build_round = false
 	for i in range(enemy_count):
 		enemy_array.append(0)
 	
+	round_timer.start()
 	enemy_spawner.initialize_enemies(enemy_array)
 	enemy_spawner.spawn_enemy()
 
@@ -87,14 +91,23 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _enter_build_round() -> void:
+	rounds += 1
+	print(rounds)
 	animation_player.play("RESET")
 	enemy_array.clear()
 	build_round = true
+	if time < 10:
+		animation_player.play("victory")
+		get_tree().paused = true
+		return
+		
 	enemies += enemies/2 + 1
 	
 	animation_player.play("build round")
 	await animation_player.animation_finished
 	build_round_timer.start()
+	round_timer.stop()
+	time = 0
 
 
 func _on_new_score(score: int) -> void:
@@ -105,9 +118,12 @@ func _on_build_round_timer_timeout() -> void:
 	animation_player.play("RESET")
 	build_round_timer.stop()
 	build_round = false
-	rounds += 1
 	shop.visible = false
 	
 	animation_player.play("new round")
 	await animation_player.animation_finished
 	start_wave(enemies)
+
+
+func _on_round_timer_timeout() -> void:
+	time += 1 # Replace with function body.

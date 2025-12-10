@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 var bullet_type: GunTurret.Type
 
-var damage: int
+var damage: float
 var speed: float
 var target: Enemy = null
 
@@ -17,11 +17,11 @@ func _ready() -> void:
 			speed = 2000
 		GunTurret.Type.MINIGUN:
 			scale = Vector2(1, 1)
-			damage = 5
+			damage = 3
 			speed = 1250
 		_:
 			scale = Vector2(2, 1)
-			damage = 35
+			damage = 33
 			speed = 1250
 
 
@@ -39,4 +39,3 @@ func _on_body_entered(body: Node2D) -> void:
 	if "Enemy" in body.name:
 		self.queue_free()
 		body.take_damage(damage)
-		print(damage)

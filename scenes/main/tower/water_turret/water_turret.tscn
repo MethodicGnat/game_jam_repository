@@ -13,7 +13,7 @@ offset_top = -20.0
 offset_right = 20.0
 offset_bottom = 20.0
 mouse_filter = 2
-color = Color(0.18359044, 0.18359044, 0.18359044, 1)
+color = Color(0.42745098, 0.6784314, 0.8745098, 1)
 
 [node name="Marker2D" type="Marker2D" parent="Placeholder"]
 position = Vector2(43, 20.3)
@@ -23,3 +23,8 @@ scale = Vector2(31.44, 31.44)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_2pi1e")
+
+[node name="ShootTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_body_exited"]

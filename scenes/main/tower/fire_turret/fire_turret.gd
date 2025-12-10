@@ -4,7 +4,7 @@ extends Turret
 
 enum Type {BASIC, FLAMETHROWER, EXPLOSION}
 
-@export var fire_turret_type: Type = Type.BASIC
+@export var fire_turret_type: Type = Type.EXPLOSION
 @onready var marker: Marker2D = $Placeholder/Marker2D
 
 var fire_attack_scene: PackedScene = preload("res://scenes/main/weapon/fire_attack/fire_attack.tscn")

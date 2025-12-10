@@ -6,7 +6,7 @@ signal target_lost
 
 const TURRET_GROUP: String = "TURRET_GROUP"
 
-@onready var shoot_timer
+@onready var shoot_timer: Timer
 var texture: Texture2D
 var target: Enemy:
 	set(new_target):
@@ -37,6 +37,10 @@ func _physics_process(_delta: float) -> void:
 
 
 func shoot() -> void:
+	pass
+
+
+func upgrade() -> void:
 	pass
 
 

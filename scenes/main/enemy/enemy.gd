@@ -17,6 +17,11 @@ enum Type {BASIC, EARTH, WIND, FIRE}
 
 const MANAGER_GROUP: String = "MANAGER"
 const DEFAULT_FIRE_TICK_SPEED: float = 0.4
+const BASIC_MOVEMENT_SPEED: float = 200
+const EARTH_MOVEMENT_SPEED: float = 100
+const WIND_MOVEMENT_SPEED: float = 750
+const FIRE_MOVEMENT_SPEED: float = 300
+const SLOW_TIME: float = 3
 
 @onready var sprite: ColorRect = $Sprite2D
 @onready var enemy_spawner: EnemySpawner = get_parent().find_child("EnemySpawner")
@@ -29,6 +34,7 @@ const DEFAULT_FIRE_TICK_SPEED: float = 0.4
 var emitted: bool = false
 var is_dead_to_turret: bool = false
 var fire_tick_speed: float = DEFAULT_FIRE_TICK_SPEED
+var default_movement_speed: float
 
 func _ready() -> void:
 	name = "Enemy"
@@ -42,20 +48,24 @@ func _ready() -> void:
 		Type.EARTH:
 			scale = Vector2(3, 3)
 			sprite.color = Color(0.533, 0.267, 0.0, 1.0)
-			movement_speed = 100
+			movement_speed = EARTH_MOVEMENT_SPEED
+			default_movement_speed = EARTH_MOVEMENT_SPEED
 			health = 333
 			z_index = 2
 		Type.WIND:
 			sprite.color = Color(0.871, 1.0, 1.0, 1.0)
 			scale = Vector2(0.75, 0.75)
-			movement_speed = 750
+			movement_speed = WIND_MOVEMENT_SPEED
+			default_movement_speed = WIND_MOVEMENT_SPEED
 			health = 50
 		Type.FIRE:
 			sprite.color = Color(1.0, 0.392, 0.251, 1.0)
-			movement_speed = 300
+			movement_speed = FIRE_MOVEMENT_SPEED
+			default_movement_speed = FIRE_MOVEMENT_SPEED
 			health = 150
 		_:
-			movement_speed = 200
+			movement_speed = BASIC_MOVEMENT_SPEED
+			default_movement_speed = BASIC_MOVEMENT_SPEED
 			health = 100
 
 
@@ -83,6 +93,14 @@ func burn(burn_level: FireTurret.Type, damage: int) -> void:
 		take_damage(damage)
 		await get_tree().create_timer(fire_tick_speed).timeout
 	burn_effect.emitting = false
+
+
+func slow(slow: float, damage: int) -> void:
+	take_damage(damage)
+	
+	movement_speed -= (movement_speed * slow)
+	await get_tree().create_timer(SLOW_TIME).timeout
+	movement_speed = default_movement_speed
 
 
 func get_path_to_position() -> void:

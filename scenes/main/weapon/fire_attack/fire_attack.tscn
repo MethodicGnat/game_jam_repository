@@ -68,13 +68,25 @@ tracks/3/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_cuovo"]
 resource_name = "basic_flame"
 
 [sub_resource type="Animation" id="Animation_wjm7l"]
 resource_name = "explode"
-length = 0.5
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -98,6 +110,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(78, 78)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_bprry"]
@@ -140,7 +164,7 @@ script = ExtResource("1_xo0q2")
 
 [node name="Explosion" type="CPUParticles2D" parent="."]
 emitting = false
-amount = 48
+amount = 128
 lifetime = 1.5
 one_shot = true
 speed_scale = 3.0
@@ -158,7 +182,6 @@ radial_accel_max = 100.0
 scale_amount_min = 0.0
 scale_amount_max = 20.0
 scale_amount_curve = SubResource("Curve_wjm7l")
-color = Color(1, 0.23529412, 0.25490198, 1)
 color_ramp = SubResource("Gradient_cgatr")
 color_initial_ramp = SubResource("Gradient_cuovo")
 
@@ -182,6 +205,7 @@ color_ramp = SubResource("Gradient_xo0q2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_xo0q2")
+disabled = true
 
 [node name="Area2D2" type="Area2D" parent="."]
 

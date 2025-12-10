@@ -1,11 +1,12 @@
+class_name WaterTurret
 extends Turret
 
 
-enum Type {BASIC, FREEZER, TYPHOON}
+enum Type {BASIC, FREEZER, STORM}
 
-@export var turret_type: Type
+@export var turret_type: Type = Type.STORM
 
-var bullet_packed_scene: PackedScene = preload("res://scenes/main/weapon/homing_missle/homing_missle.tscn")
+var water_attack_scene: PackedScene = preload("res://scenes/main/weapon/water_attack/water_attack.tscn")
 var killable_enemies: Array[Enemy]:
 	set(new_killable_enemies):
 		killable_enemies = new_killable_enemies
@@ -15,7 +16,15 @@ var killable_enemies: Array[Enemy]:
 
 func _ready() -> void:
 	super._ready()
-	damage_rate = 1
+	
+	match (turret_type):
+		Type.FREEZER:
+			damage_rate = 3
+		Type.STORM:
+			damage_rate = 7
+		_:
+			damage_rate = 1
+	
 	shoot_timer = $ShootTimer
 	shoot_timer.wait_time = damage_rate
 
@@ -54,8 +63,14 @@ func _on_is_firing() -> void:
 
 
 func shoot():
-	var bullet := bullet_packed_scene.instantiate()
-	bullet.position = global_position + Vector2(5, 5)
-	bullet.target = target
-	get_tree().get_root().add_child(bullet)
+	var water_attack := water_attack_scene.instantiate()
+	match (turret_type):
+		Type.STORM:
+			pass
+		_:
+			water_attack.position = marker.global_position
+	water_attack.attack_type = turret_type
+	water_attack.target = target
+	get_tree().get_root().add_child(water_attack)
+	killable_enemies.erase(target)
 	target = null
